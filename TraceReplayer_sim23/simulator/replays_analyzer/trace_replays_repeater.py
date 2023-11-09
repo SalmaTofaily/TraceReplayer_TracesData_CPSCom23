@@ -16,6 +16,4 @@ def replayNTimes_calculatingAvgAndStdevOfAllResults(num_runs: int, exp_identifie
         accumelated_results_dic_metricKey_values, exp_identifier_key )
     print("Finished replay set at "+ now_readable())
     return dic_metricKey_valuesAvgAndStdev
-    # return example {
-    #     'metric1': (average,value)
-    # }
+   

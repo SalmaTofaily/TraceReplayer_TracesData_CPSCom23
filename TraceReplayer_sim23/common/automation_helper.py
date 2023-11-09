@@ -2,7 +2,7 @@
 from typing import Dict
 
 # experiment_function_returning_dic_and_expIdentifier: return results dic (metric key and its value, and an exp_id key its name is configurable in method) and exp_id
-# used chatgbt and enhanced
+# used chatgpt and enhanced
 def accumulate_n_runs_results(num_runs, exp_identifier_key, experiment_function_returning_dic_and_expIdentifier, *args, **kwargs) -> Dict[str, list]:
     # https://www.geeksforgeeks.org/args-kwargs-python/
     #  # *args (Non-Keyword Arguments)

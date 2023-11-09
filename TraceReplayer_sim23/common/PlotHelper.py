@@ -100,7 +100,7 @@ def plot_line_graph_reusable_manyDFs(x_colName,x_label,y1_colName,y1_label, data
         ax2 = ax.twinx()
         ax2.set_ylabel(y2_label)  # we already handled the x-label with ax1
 
-    #loop bychatgbt
+    #loop bychatgpt
     i_color= 0
     linewidth=3
     for i, df in enumerate(dataframes):

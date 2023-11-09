@@ -7,7 +7,7 @@ from simulator.power_models.PowerStateModels import ParentPowerStateModel, const
 from simulator.replayer.df_cols_temp import  colName_model_inst_pow_prediction, colName_refTrace_Power, colName_refTrace_timestamp, colName_trace_power
 from simulator.replays_analyzer.trace_replay_analyzer import analyzeResults
    
-def initiate_results_df(trace_power_array, reference_trace_power_array, ref_trace_timestamps):#assuming same sampling rate
+def initiate_results_df(trace_power_array, reference_trace_power_array, ref_trace_timestamps): #assuming same sampling rate
     trace_power_array_view_extended = deepCopyL1AndExtendWithNoneToMatchL2Size(trace_power_array, reference_trace_power_array) 
     df_results = pd.DataFrame(
         list(

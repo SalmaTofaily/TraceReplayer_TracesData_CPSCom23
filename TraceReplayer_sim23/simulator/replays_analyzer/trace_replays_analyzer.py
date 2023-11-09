@@ -82,7 +82,7 @@ def plot_tradeoff_for_all_models_inputsize_and_totalDeltaEnergy(modelEnums, data
         # df_tradeoff__results=create_combined_dataframe_each_of_1_row(dataframes_results_array, x_colName, y1_colName) # can use this results later down to plot. todo
         # df_tradeoff__results.to_csv(output_graph_path_nolastname+"__trafeoff_exps_dataframe.csv")
         # print("trafeoff_exps_results logged in: "+output_graph_path_nolastname+"__trafeoff_exps_dataframe.csv")
-        # todo fix.
+       
         # index is wrong here because we define i from 1 to n? no index work. it is relative to sec
         x_label="Index of last iteration in calibration trace"
         plot_line_graph_reusable_manyDFs(# this can be from one df(df_tradeoff__results)todo enahance. ont priority
@@ -198,7 +198,7 @@ def _trafeoff_calibInputLength_deltaEnrgyOfPredictionAndComp2Trace(
         # select all the rows with crossExpsIterationUniqueIds equals or less the current one.
 
         df__curr_calib_input_trace = dataframe__target_calibration_trace.query( # todo use name _colName_crossExpsIterationUniqueIds()
-            "crossExpsIterationUniqueIds <= @acrossExpsIterationUniqueId") ##############new calibration each time. this assumes that experiments are ordered in ascending order in the trace. handled input trace
+            "crossExpsIterationUniqueIds <= @acrossExpsIterationUniqueId") ############## new calibration each time. this assumes that experiments are ordered in ascending order in the trace. handled input trace
         
         this_replay_folder_log=""
         if logEachReplayResult:
@@ -210,7 +210,6 @@ def _trafeoff_calibInputLength_deltaEnrgyOfPredictionAndComp2Trace(
         # input trace should be new each time coz each time new columns are added and i do not want to have repeated cols problems.
         results_summary_dict, modelName, model = replayUsingModel(  # creates a new copy of the df inside
                     trace_power_array = list(df__curr_calib_input_trace[ colName_measured_power_in_inputTrace()]),
-                    # returns the delta energy for now between prediction and calibration - todo later support other needed things
                     trace2cmp2_timestamp_list=trace2cmp2_timestamp_list,
                     trace_state_full_name = trace_state_full_name,
                     trace_to_cmp2_power_array = trace_to_cmp2_power_array,
@@ -221,8 +220,6 @@ def _trafeoff_calibInputLength_deltaEnrgyOfPredictionAndComp2Trace(
                     logResults=logEachReplayResult 
                   )
         delta_E_total__prediction_cmp2Trace =results_summary_dict[ColName__delta_in_total_energy__btwn_refTrace_and_predictedTrace()]
-        # can do the same for:  ColName_avg_rel_delta_perct()
-        # not dynamic here for metrics. but fine now
 
         avgPower_Ref_Trace = statistics.mean(trace_to_cmp2_power_array)
        
@@ -233,8 +230,7 @@ def _trafeoff_calibInputLength_deltaEnrgyOfPredictionAndComp2Trace(
         # add the results in the df, each exp in a row
         new_row_dic = {
             'simulation_id': counter,
-            # len(df__curr_calib_input_trace.index), # grows in each simulation
-            'input_trace__iterations_count': df__curr_calib_input_trace[_colName_crossExpsIterationUniqueIds()].nunique(), # _colName_crossExpsIterationUniqueIds()
+            'input_trace__iterations_count': df__curr_calib_input_trace[_colName_crossExpsIterationUniqueIds()].nunique(), 
             'input_trace__measurements_count': len(df__curr_calib_input_trace.index),
             'reference_trace_measurements_count': len(trace_to_cmp2_power_array),
             'delta_E_total__prediction_com2Trace': delta_E_total__prediction_cmp2Trace,
@@ -273,57 +269,10 @@ def _append_column__UniqueItersIds_acrossExpsIteration(df):
 
 
 def mock_replay_model_on_dataframe(dataframe_model_input_trace, dataframe_model_calibration_trace) -> int:
-    # returns the delta energy for now between prediction and calibration - todo later support other needed things
-    # randomize
     print("random()")
     return random.randint(10, 100)
 
-# def _plot_trafeoff_figure(df,x_list,x_label,y1_list,y1_label,y2_list,y2_label, title):  
 def _plot_trafeoff_figure(x_list,x_label,y1_list,y1_label, title, my_fontsize, output_path_wihtout_lastName):
     output_file__last_name="__tradeoff_calibrationTraceSize_EnergyDeltaPredictionCmp2Trace.pdf"
     plot_line_graph_reusable(x_list,x_label,y1_list,y1_label, title, my_fontsize, output_path_wihtout_lastName, output_file__last_name)
  
-
-
-
- #https://sparkbyexamples.com/pandas/pandas-filter-by-column-value/
-    # unique_exp_ids = dataframe_model_input_trace["exp_id"].unique() 
-    # for exp_id in  unique_exp_ids:
-    #     df_curr_exp= dataframe_model_input_trace.query("exp_id == @exp_id")
-    #     curr_iteration_index = 0
-
-    #     # loop over iterations
-    #     # df_curr_exp= dataframe_model_input_trace.query("iteration_index <= @curr_iteration_index and exp_id == @exp_id")
-    #     print(max_iteration_index)
-    #     t = df_curr_exp["measured_power"].tolist()
-    #     df_curr_exp.to_csv("test.csv")
-    #     pass
-  
-    # but we have multiple experiments too, so i need to loop over all unique expid_iteration_index
-    # detailed_log_folder+"/"+executable_run_timestamp+"models-predictions.csv")
-
-# def trafeoff_calibInputLength_deltaEnrgyOfPredictionAndComp2Trace(dataframe_model_input_trace, 
-#                                                                   trace_to_cmp2_power_array,
-#                                                                   trace2cmp2_timestamp_list,
-#                                         detailed_log_folder,
-#                                         executable_run_timestamp,
-#                                         fontsize,
-#                                         predictionBucketSize, modelNameEnum, specificCalibMode,
-#                                         trace_state_full_name
-#                                         ):
-#     df_results, modelName = _trafeoff_calibInputLength_deltaEnrgyOfPredictionAndComp2Trace(
-#                                         dataframe_model_input_trace,
-#                                         trace_to_cmp2_power_array,
-#                                         trace2cmp2_timestamp_list,
-#                                         detailed_log_folder,
-#                                         executable_run_timestamp, 
-#                                         predictionBucketSize, modelNameEnum, specificCalibMode,
-#                                         trace_state_full_name
-#                                         )
-#     x_list = list(df_results['input_trace__iterations_count'])
-#     y_list = list(df_results['delta_E_total__prediction_com2Trace']) 
-#     title = "Replays Results: Tradeoff between input trace size and TotalEnergyDelta (between prediction and compare-to-trace)"
-#     x_label = "Calibration trace size:iterations count" # size #("Replay index") or seconds
-#     y_label = "Total Energy Delta(J)"
-#     output_graph_path_nolastname = detailed_log_folder + "/" + executable_run_timestamp + "/" + executable_run_timestamp + "_model_" + modelName + "_"
-#     _plot_trafeoff_figure( x_list, x_label, y_list, y_label, title, fontsize, output_graph_path_nolastname)

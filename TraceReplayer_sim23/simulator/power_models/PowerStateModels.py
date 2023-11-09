@@ -17,7 +17,7 @@ import numpy as np
 class ParentPowerStateModel(ABC):
     # Power state model is non-ordered set of double-value entries: state, power description
     # Assuming power state model entry is for one device.
-    # Assuming each state is unique.(Name idle in differnet ways if u have many substates)
+    # Assuming each state is unique.(Name idle in different ways if u have many sub-states)
 
     def __init__(self, model_Name):
         self.name = model_Name # todo in parent
@@ -96,7 +96,7 @@ class StaticPowerStateModel(ParentPowerStateModel):
                             " is not defined in the model.")
         return state_data_desc.staticValue
 
-class VarAware_PSM(ParentPowerStateModel,ABC): # abtract class coz we want to force childs to implement 2 methods.
+class VarAware_PSM(ParentPowerStateModel,ABC): # abstract class coz we want to force child to implement 2 methods.
     def __init__(self, model_Name, predictionBucketSize):
         super().__init__(model_Name)
         self.predictionBucketSize = predictionBucketSize
@@ -118,7 +118,7 @@ class VarAware_PSM(ParentPowerStateModel,ABC): # abtract class coz we want to fo
         if state_data_desc == -1:
             raise TypeError("State " + stateName + " is not defined in the model.")
         if len(self.bucket) == 0:
-            self.bucket=self._predictInBucket(state_data_desc)#abstract method, implemented by each child.
+            self.bucket=self._predictInBucket(state_data_desc) #abstract method, implemented by each child.
 
         last_index = len(self.bucket) -1
         prediction = self.bucket.pop(last_index)
@@ -132,11 +132,10 @@ class VarAware_PSM(ParentPowerStateModel,ABC): # abtract class coz we want to fo
 #################################################
 
 class VarAware_PSM_uniform_q1_q3(VarAware_PSM):
-    def __init__(self, predictionBucketSize): #var-aware-uniform-dist-
+    def __init__(self, predictionBucketSize): 
         super().__init__(model_Name='var-unif-q1-q3', predictionBucketSize=predictionBucketSize)
 
-    # function calibrate only from state, q1 and q3.
-
+    # function calibrate only from the state, q1 and q3.
     def calibrate(self, stateName:string, trace_power_array, allow_update:bool=False):
         trace_power_q1 = apply_power_measurement_resolution(np.percentile(trace_power_array, [25]))
         trace_power_q3 = apply_power_measurement_resolution(np.percentile(trace_power_array, [75]))
@@ -145,14 +144,11 @@ class VarAware_PSM_uniform_q1_q3(VarAware_PSM):
     
     def _predictInBucket(self, state_data_desc: DataDistributionDescription):
         return  self._predictUniformlyInBucket(state_data_desc.q1, state_data_desc.q3)
-        #  min(trace_power_array)
-        #  apply_power_measurement_resolution(statistics.median(trace_power_array))
-        #  max(trace_power_array)
-
+      
 ###################################################
 
 class VarAware_PSM_empirical_dist(VarAware_PSM):
-    def __init__(self, predictionBucketSize): #'var-aware-empirical-distribution'
+    def __init__(self, predictionBucketSize):
         super().__init__(model_Name= 'var-empirical-dist', predictionBucketSize=predictionBucketSize)
 
     def calibrate(self, stateName:string, trace_power_array, allow_update:bool=False):
@@ -169,7 +165,7 @@ class VarAware_PSM_empirical_dist(VarAware_PSM):
 ##################################################
 
 class VarAware_PSM_uniformAvg_Stdev(VarAware_PSM):
-    def __init__(self, predictionBucketSize): #var-aware-uniform-dist-avg-stdev
+    def __init__(self, predictionBucketSize): 
         super().__init__(model_Name='var-unif-avg-stdev', predictionBucketSize=predictionBucketSize)
 
     def calibrate(self, stateName:string, trace_power_array, allow_update:bool=False):
@@ -180,6 +176,6 @@ class VarAware_PSM_uniformAvg_Stdev(VarAware_PSM):
 
     def _predictInBucket(self, state_data_desc: DataDistributionDescription):
         min = state_data_desc.avg - state_data_desc.stdev 
-        max = state_data_desc.avg + state_data_desc.stdev #todo later check to move to another plave in calibration for the state and predict is for that state for sure
+        max = state_data_desc.avg + state_data_desc.stdev 
         return self._predictUniformlyInBucket(min, max)
  

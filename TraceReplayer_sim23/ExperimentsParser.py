@@ -35,7 +35,7 @@ def plot_exps_traces_from_file(filepath):
     dataframe = pd.read_csv(filepath, parse_dates=True) 
     power_array = dataframe[power_column_name].tolist()
     timestamp_array = dataframe[timestamp_column_name].tolist()
-    #ChatGBT: The unique() method returns a numpy array containing the unique values inthe specified column
+    #ChatGPT: The unique() method returns a numpy array containing the unique values in the specified column
     unique_expids = dataframe[exp_ids_column_name].unique()
     expids_space_separated = " ".join(list(map(str, unique_expids)))
 
@@ -45,13 +45,12 @@ def from_experiment_generate_traces_file(experiment, filename):
     # append mode
     file = open(filename, 'a')
     writer = csv.writer(file)
-
     writer.writerow(csv_header)
 
     for exp_itr_res in experiment.iterations_results:
         int_measurement_count = len(exp_itr_res.measurement_timestamps)
         # zip matches arrays whose indexes are correlated into tuples.
-        #ChatGBT list,zip
+        #ChatGPT list,zip
         rows = list(zip([experiment.id]*int_measurement_count,
                         [exp_itr_res.index]*int_measurement_count,
                         exp_itr_res.measurement_timestamps,

@@ -10,12 +10,12 @@ from common.ListsHelper import getCountOfUniqueItemsInList
 def calculate_avg_stdev_for_dic_of_values(dictionary: Dict, exp_identifier: str) -> Dict[str, float]:
 
     # if modelName unique count != 1 error.
-    # used chatgbt and updated code
+    # used chatgpt and updated code
     results_sumForBulk = {}
     context_names =  dictionary[exp_identifier] # ex modelName
     count_exps = len(dictionary[exp_identifier])
     if getCountOfUniqueItemsInList(context_names) != 1:
-        raise Exception("Passed results_sumForBulk for different experiemtns")
+        raise Exception("Passed results_sumForBulk for different experiments")
     # calculate all except for the modelName key
     for key, values in dictionary.items():
         if key == exp_identifier:
@@ -38,7 +38,7 @@ def get_min_max_in_dic_values(dic_distinct_lists):
     _max = max(l_All)
     return _min, _max
 
-def calculate_median_q1_q3_avg_stdev(filename:str):#chatgbt
+def calculate_median_q1_q3_avg_stdev(filename:str):#chatgpt
     # def calculate_median(filename):get_median_of_numbers_in_file_line_separated
     # Read the file and store the numbers in a list
     numbers = []

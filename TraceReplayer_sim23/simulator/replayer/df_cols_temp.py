@@ -3,7 +3,7 @@
 # raw trace file  ### this can vary depending on input trace vsc
 def colName_measured_power_in_inputTrace():
     return 'measured_power'
-def colName_expId_in_inputTrace(): # a trace can be a concatination of multiple experiments, each of multiple iterations
+def colName_expId_in_inputTrace(): # a trace can be a concatenation of multiple experiments, each of multiple iterations
     return 'exp_id'
 
 def colName_iterationIndex_in_inputTrace():

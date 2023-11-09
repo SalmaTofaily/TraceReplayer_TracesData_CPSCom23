@@ -32,14 +32,11 @@ def plot_exps_histogram_dict_lists_distribution(dic_distinct_lists, output_filep
    
     for array_name, array in dic_distinct_lists.items():#key, value 
         counts, bins = np.histogram(array, bins=bins_count) #The Numpy histogram function doesn't draw the histogram, but it computes the occurrences of input data that fall within each bin, which in turns determines the area (not necessarily the height if the bins aren't of equal width) of each bar.
-        # max_counts_in_lists.append(max(counts))
-        
         ax = fig.add_subplot(nrows, ncols, i+1)
         i=i+1
-        # axes.append(ax)
        
         set_axes_ticks_labels_size(ax, my_fontsize)
-        ax.hist(bins[:-1], bins, weights=counts)#this_distinct_measurements, this_distinct_measurements_frequencies)
+        ax.hist(bins[:-1], bins, weights=counts)
         
         # fix same x range between all plots
         ax.set_xlim(xmin=min_x)
@@ -49,11 +46,6 @@ def plot_exps_histogram_dict_lists_distribution(dic_distinct_lists, output_filep
             ax, f'Distribution in {array_name}', my_fontsize)
         set_xlabel_with_fontsize(ax, x_label, my_fontsize)
         set_ylabel_with_fontsize(ax, y_label, my_fontsize)
-
-    # max_count_in_all_list=max(max_counts_in_lists)
-    
-    # for ax in axes:
-    #     ax.set_ylim(ymin = max_count_in_all_list)
 
     plt.savefig(output_filepath)
     

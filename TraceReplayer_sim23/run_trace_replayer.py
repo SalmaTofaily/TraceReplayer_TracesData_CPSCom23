@@ -38,14 +38,13 @@ def formulate_state_name(trace_state_name, trace_substate_name):
 def plot_density_kde():
     df_all = pd.DataFrame(
         {  
-            'original-trace': trace_power_array_view_extended_withNons_to_match_trace2cmp2_size, #trace_power_array,
-            # # 'power-state-model':  ,
+            'original-trace': trace_power_array_view_extended_withNons_to_match_trace2cmp2_size, 
             'My model prediction':var_aware_probability_distribution_POWER_PREDICTION,
             'uniform-distribution-prediction-between-q1-and-q3': var_aware_UniformDistributionBetweenQ1Q3_POWER_PREDICTION,
             'uniform-distribution-prediction-stdev-around-median': var_aware_uniform_distribution_stdev_avg_POWER_PREDICTION
         }
     )
-    ax = df_all.plot.kde() #plot(figsize=(16,9))
+    ax = df_all.plot.kde() 
     # legend
     plt.xlabel("Trace Power Measurement(W)")
     plt.title("Kernel Density Estimate plot using Gaussian kernels")
@@ -68,17 +67,16 @@ def _add_column__countIterationsIncludedTillCurrentObservation(df):
         _append_column__UniqueItersIds_acrossExpsIteration(df)
     
     newColValues=[]
-    count_uniqueIteration=0 # start counting from 1 down.
+    count_uniqueIteration=0 
     keyAnchor=-1 # not existing expIdItId key :)
-    iterationsKeysForAllObs = df[_colName_crossExpsIterationUniqueIds()] # 9000 9000 9000 9001 9001 9001 9002 8000
-    count_observation_in_iterationdecimal=0
+    iterationsKeysForAllObs = df[_colName_crossExpsIterationUniqueIds()]
+    count_observation_in_iterationdecimal=0 
     displayStep=25
     progress_in_DisplayStep=0
     for iterationKey in iterationsKeysForAllObs:
         if keyAnchor != iterationKey:
             count_uniqueIteration+=1
             keyAnchor = iterationKey
-        # count_uniqueIteration + 
             progress_in_DisplayStep+=1
             if progress_in_DisplayStep == displayStep:
                 newColValues.append(count_uniqueIteration)
@@ -98,7 +96,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--path_original_trace',
-                        help='Filepath for original trace. Trace should be ordered. exp ids and iterations chronologically as executed.',
+                        help='Filepath for original trace. Trace should be ordered chronologically.',
                         default='./_traces/concatinated_cleaned/node1-1688044998.773062-341477 341489 341501 341512 341527 341547 341565 341579 341602 341615-trace.csv',
                         type=str
                         )
@@ -113,7 +111,6 @@ if __name__ == "__main__":
     parser.add_argument('--path_trace_to_compare_to',
                         help='Filepath for the trace to compare to. Trace should be ordered. exp ids and iterations chronologically as executed.',
                         default='./_traces/concatinated_cleaned/node1-1688044998.773062-341477 341489 341501 341512 341527 341547 341565 341579 341602 341615-trace.csv',
-                       
                         type=str)
     parser.add_argument(
         '--num_runs',
@@ -131,7 +128,7 @@ if __name__ == "__main__":
     parser.add_argument("--verbose_in_tradeoff_exps", action="store_true",
                     help="logEachReplayDetailedResults_for_tradeoff_exps")
     #  The store_true option has a default value of False. 
-    # Whereas, store_false has a default value of True. 
+    #  Whereas, store_false has a default value of True. 
    
     parser.add_argument(
         '--detailed_log_folder',
@@ -140,7 +137,7 @@ if __name__ == "__main__":
         type= str
     )
 
-    predictionBucketSize = 5000 # configurable todo
+    predictionBucketSize = 5000 
     fontsize = 28
     args = parser.parse_args()
 
@@ -172,8 +169,6 @@ if __name__ == "__main__":
     #cleaned no gaps already
     dataframe_model_calibration_trace = pd.read_csv(args.path_original_trace, parse_dates=True) 
 
-    # add column cumulative_interations_count
-
     calibration_trace_timestamp_list = dataframe_model_calibration_trace[timestamp_column_name].tolist() # problem here in the dataframe used.
     trace_power_array = dataframe_model_calibration_trace[power_column_name].tolist()   
 
@@ -186,15 +181,14 @@ if __name__ == "__main__":
     filename_calibTrace__x_as_countEllapsedUniqIter=detailed_log_folder+"/"+executable_run_timestamp+"/"+executable_run_timestamp+"_" + trace_state_full_name + "_calibration_trace__XaxesIterationsElallpsed.pdf"
     plot_trace("",
                filename_calibTrace__x_as_countEllapsedUniqIter, 
-               calibration_trace_timestamp_list
-              ,# no this makes all points have same x in an itertion
+               calibration_trace_timestamp_list,
                trace_power_array,
                xlabels=list(dataframe_model_calibration_trace[_colName_count_ellapsedIterations()]),xlabel="Number of elapsed iterations",fontsize=fontsize)
 
     # The reference trace
     trace_to_cmp2_power_array,dataframe_trace_to_cmp2 = readReferenceTrace(args.path_trace_to_compare_to, trace_power_array)
     
-    # as calibration trace can be shorter from compare-2-trace, we use timestamps from compare-to trace. And generate power measurements matching that length.
+    # As calibration trace can be shorter from compare-2-trace, we use timestamps from compare-to trace. And generate power measurements matching that length.
     trace2cmp2_timestamp_list = dataframe_trace_to_cmp2[timestamp_column_name].tolist()
     plot_trace("",  detailed_log_folder + "/" + executable_run_timestamp+"/"+executable_run_timestamp+"_"+trace_state_full_name+"_reference_trace.pdf", trace2cmp2_timestamp_list, trace_to_cmp2_power_array, show=True,
                fontsize=fontsize)
@@ -215,9 +209,9 @@ if __name__ == "__main__":
     print("detailed_log_folder: " + detailed_log_folder)
     print()
 
-    #--------------------- End Read and cleaned traces----------------------------
+    #---------------------- End Read and cleaned traces-----------------------------------------------------
 
-    # --------------------- Program in mode repeating many experiments for all moedls ----------------------
+    # --------------------- Program in mode repeating many experiments for all models ----------------------
     modelEnums = [ModelNameEnum.STATIC, ModelNameEnum.EMPIRICAL_DIST, ModelNameEnum.UNIFORM_Q1_Q3, ModelNameEnum.UNIFORM_AVG_STDEV]
     if num_runs > 1:
         #run n times one model and report values.
@@ -264,10 +258,8 @@ if __name__ == "__main__":
         exit() 
     # --------------------- End Program in mode repeating many experiments for all models ----------------------
     
-
     # --------------------- Program in mode of doing tradeoff experiments for trace input size and metrics ----------------------
     if generate_tradeoff_graphs_inputSize_metrics >= 1 :
-        
         plot_tradeoff_for_all_models_inputsize_and_totalDeltaEnergy(modelEnums,
                                                                     dataframe_model_input_trace =  dataframe_model_calibration_trace,
                                                                     trace_to_cmp2_power_array = trace_to_cmp2_power_array, 
@@ -287,7 +279,7 @@ if __name__ == "__main__":
     df_results_details = initiate_results_df(trace_power_array, trace_to_cmp2_power_array, trace2cmp2_timestamp_list)
         
     model_static_avg = constructModel(ModelNameEnum.STATIC, SpecificCalibMode._MEAN,None)
-    df_summary_res_static= replay( # todo add name median or mean, todo add tiemstamp
+    df_summary_res_static= replay( 
         df_results_details,
         trace_power_array,
         trace2cmp2_timestamp_list,
@@ -336,6 +328,3 @@ if __name__ == "__main__":
     df_results_details.to_csv(
         detailed_log_folder+"/"+executable_run_timestamp+"models-predictions.csv")
     print("replay-details logged in: "+  detailed_log_folder+"/"+executable_run_timestamp+"models-predictions.csv")
-    # make it working then refactor.
-
-    exit()

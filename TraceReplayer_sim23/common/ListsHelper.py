@@ -19,7 +19,7 @@ def deepCopyList(lst):
 def getCountOfUniqueItemsInList(myList):
     return len(Counter(myList).keys()) 
 
-def save_list_to_file(data):#chatgbt generated
+def save_list_to_file(data):#chatgpt generated
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")  # Generate timestamp
     file_name = f"file_{timestamp}.txt"  # Create file name with timestamp
 
@@ -31,7 +31,7 @@ def save_list_to_file(data):#chatgbt generated
 
 
 def calculate_average_of_nums_in_file(file_path):# each num on a line
-    #chatgbt method
+    #chatgpt method
     try:
         # Open the file in read mode
         with open(file_path, 'r') as file:

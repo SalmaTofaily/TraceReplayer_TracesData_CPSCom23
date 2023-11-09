@@ -22,7 +22,7 @@ def add_column_absoluteValOfDeltaOf2cols_in_dataframe(df, col1Name, relativeToCo
     insert_new_column_in_df(df,newColName,newColumn)
 
 def create_combined_dataframe_each_of_1_row(dataframes_array, col1Name, col2Name):
-    #chatgbt generated, modified(named generic)
+    #chatgpt generated, modified(named generic)
     combined_df = pd.DataFrame(columns=[col1Name, col2Name])
     for df in dataframes_array:
         row = df.iloc[0] 
@@ -33,7 +33,7 @@ def create_combined_dataframe_each_of_1_row(dataframes_array, col1Name, col2Name
 
 
 def create_combined_dataframe_each_of_many_rows(dataframes_array, col1Name, col2Name):
-    #chatgbt generated, modified(named generic)
+    #chatgpt generated, modified(named generic)
     combined_df = pd.DataFrame(columns=[col1Name, col2Name])
     for df in dataframes_array:
          for _, row in df.iterrows():
