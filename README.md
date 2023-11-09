@@ -7,7 +7,6 @@ It includes three updates of the Power State Model, considering power variabilit
 It also allows to conduct tradeoff experiments between calibration trace size and models accuracy.
 In addition, it allows evaluating the standard deviation of results, when a replay is repeated n times.
 
-==================================================================================
 # Get Started with the code
 run_trace_replayer.py has several arguments for configuration.
 A demo is prepared to run tradeoff experiments.
