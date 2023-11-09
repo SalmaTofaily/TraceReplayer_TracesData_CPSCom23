@@ -1,8 +1,8 @@
 
 # Trace Relayer Overview
-For the paper " Representing Power Variability of an Idle IoT Edge Node in the Power State Model"
+For the paper " Representing Power Variability of an Idle IoT Edge Node in the Power State Model".
 
-Trace Replayer for comparing power models predictions with real power measurements, evaluating models accuracy.
+The project includes the "Trace Replayer" for comparing power models predictions with real power measurements, evaluating models accuracy.
 It includes three updates of the Power State Model, considering power variability of a state in different ways.
 It also allows to conduct tradeoff experiments between calibration trace size and models accuracy.
 In addition, it allows evaluating the standard deviation of results, when a replay is repeated n times.
