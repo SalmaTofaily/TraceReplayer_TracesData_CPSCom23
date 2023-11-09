@@ -17,8 +17,4 @@ To run the demo, update the filepath of the traces to match the traces folder.
 `./run_demo.sh`
 
 Code follows the original naming of scenarios. Scenarios A B, and C in the paper are c, e, and d in the code, respectively.
-  c. all exps
-  d. all except first exp
-  e. all experiments without the first 20 iterations
-
 The Original Trace is presented for each node in the traces folders.
