@@ -1,0 +1,3 @@
+power_column_name='measured_power'
+timestamp_column_name='measurement_timestamp'
+exp_ids_column_name='exp_id'

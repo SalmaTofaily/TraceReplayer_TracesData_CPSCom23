@@ -1,0 +1,9 @@
+{
+    "python.analysis.extraPaths": [
+        // "./models",
+        // "./common",
+        // "./observations",
+        // "./fit_iot_lab",
+        // ".readers"
+    ]
+}
