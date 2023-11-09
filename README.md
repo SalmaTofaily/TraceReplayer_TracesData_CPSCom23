@@ -13,8 +13,8 @@ run_trace_replayer.py has several arguments for configuration.
 A demo is prepared to run tradeoff experiments.
 To run the demo, update the filepath of the traces to match the traces folder.
 
-chmod +x run_demo.sh
-./run_demo.sh
+`chmod +x run_demo.sh`
+`./run_demo.sh`
 
 Code follows the original naming of scenarios. Scenarios A B, and C in the paper are c, e, and d in the code, respectively.
 c. all exps
